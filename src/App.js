@@ -3,9 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from "./components/Header";
 import { Menu } from "./components/Menu";
 import { PostList } from "./components/PostsList";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PostItem } from "./components/PostItem";
 import { getAll } from "./service/post.service";
+import { Route, Routes } from "react-router-dom";
+import { FormLogin } from "./components/FormLogin";
 
 
 function App() {
@@ -21,19 +23,26 @@ function App() {
     }
   }, []);
   return (
-    <Container>
-      <Menu />
-      <Header />
+    <React.Fragment>
       <Container>
-        <PostList>
-          {
-            posts.map(p => (
-              <PostItem key={p._id} title={p.title} abstract={p.abstract} />
-            ))
-          }
-        </PostList>
+        <Menu />
+        <Header />
       </Container>
-    </Container>
+      <Routes>
+        <Route path="/" element={
+          <PostList>
+            {
+              posts.map(p => (
+                <PostItem key={p._id} title={p.title} abstract={p.abstract} />
+              ))
+            }
+          </PostList>
+        } />
+        <Route path="/signin" element={
+          <FormLogin />
+        } />
+      </Routes>
+    </React.Fragment >
   );
 }
 
